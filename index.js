@@ -109,6 +109,7 @@ async function deleteOlderReleases(keepLatest) {
     );
     releaseIdsAndTags = activeMatchedReleases
       .map(({ id, tag_name: tagName }) => ({ id, tagName }))
+      .sort((a, b) => b.id - a.id)
       .slice(keepLatest);
   } catch (error) {
     console.error(`🌶  failed to get list of releases <- ${error.message}`);
