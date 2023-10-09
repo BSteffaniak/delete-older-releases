@@ -9,7 +9,7 @@ const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 
 if (!process.env.GITHUB_REPOSITORY) {
   console.error(
-    "🔴 no GITHUB_REPOSITORY found. pass `GITHUB_REPOSITORY` as env"
+    "🔴 no GITHUB_REPOSITORY found. pass `GITHUB_REPOSITORY` as env",
   );
   process.exitCode = 1;
   return;
@@ -44,7 +44,9 @@ if (Number.isNaN(keepLatest) || keepLatest < 0) {
 }
 
 if (keepLatest === 0) {
-  console.error("🌶  given `keep_latest` is 0, this will wipe out all releases");
+  console.error(
+    "🌶  given `keep_latest` is 0, this will wipe out all releases",
+  );
 }
 
 const shouldDeleteTags = process.env.INPUT_DELETE_TAGS === "true";
@@ -94,7 +96,7 @@ async function deleteOlderReleases(keepLatest) {
     data = data || [];
     // filter for delete_pattern
     const activeMatchedReleases = data.filter(
-      ({ draft, tag_name }) => !draft && checkPatternMatch(tag_name)
+      ({ draft, tag_name }) => !draft && checkPatternMatch(tag_name),
     );
 
     if (activeMatchedReleases.length === 0) {
@@ -105,7 +107,7 @@ async function deleteOlderReleases(keepLatest) {
     const matchingLoggingAddition = deletePattern.length > 0 ? " matching" : "";
 
     console.log(
-      `💬  found total of ${activeMatchedReleases.length}${matchingLoggingAddition} active release(s)`
+      `💬  found total of ${activeMatchedReleases.length}${matchingLoggingAddition} active release(s)`,
     );
     releaseIdsAndTags = activeMatchedReleases
       .map(({ id, tag_name: tagName }) => ({ id, tagName }))
@@ -146,7 +148,7 @@ async function deleteOlderReleases(keepLatest) {
           });
         } catch (error) {
           console.error(
-            `🌶  failed to delete tag "${tagName}"  <- ${error.message}`
+            `🌶  failed to delete tag "${tagName}"  <- ${error.message}`,
           );
           hasError = true;
           break;
@@ -154,7 +156,7 @@ async function deleteOlderReleases(keepLatest) {
       }
     } catch (error) {
       console.error(
-        `🌶  failed to delete release with id "${releaseId}"  <- ${error.message}`
+        `🌶  failed to delete release with id "${releaseId}"  <- ${error.message}`,
       );
       hasError = true;
       break;
@@ -167,7 +169,7 @@ async function deleteOlderReleases(keepLatest) {
   }
 
   console.log(
-    `👍🏼  ${releaseIdsAndTags.length} older release(s) deleted successfully!`
+    `👍🏼  ${releaseIdsAndTags.length} older release(s) deleted successfully!`,
   );
 }
 
